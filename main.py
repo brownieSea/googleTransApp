@@ -1,5 +1,6 @@
 import googletrans
 import sys
+import re
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import uic  # qt designer에서 만든 ui를 불러오기 위해서 사용
@@ -23,9 +24,12 @@ class googleTrans(QMainWindow, form_class):
 
     def transAction(self):  # 번역 실행 함수 -> slot 함수
         korStr = self.inputKor.text()   # 입력된 한글 텍스트 가져오기
+        reg = re.compile(r'[^가-힣|0-9]+$')
         if korStr == "":
             # pass
             QMessageBox.warning(self, "입력오류", "내용을 입력해주세요")
+        elif reg.search(korStr):  # 한글 판독
+            QMessageBox.warning(self, "입력오류", "한글을 입력해주세요")
         else:
             trans = googletrans.Translator()  # 구글트랜스 모듈의 객체 선언
             engStr = trans.translate(korStr, "en")
@@ -42,6 +46,7 @@ class googleTrans(QMainWindow, form_class):
         self.inputKor.clear()
 
     def clearText2(self):
+        self.inputKor.clear()
         self.strEng.clear()
         self.strJpn.clear()
         self.strChn.clear()
