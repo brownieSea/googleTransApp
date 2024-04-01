@@ -35,8 +35,6 @@ class googleTrans(QMainWindow, form_class):
             msgBox.warning(msgBox, "입력오류", "내용을 입력해주세요")
         elif reg.search(korStr):  # 한글 판독
             msgBox.warning(msgBox, "입력오류", "한글과 숫자만 입력해주세요")
-
-            # QMessageBox.warning(self, "입력오류", "한글과 숫자만 입력해주세요")
         else:
             trans = googletrans.Translator()  # 구글트랜스 모듈의 객체 선언
             engStr = trans.translate(korStr, "en")
