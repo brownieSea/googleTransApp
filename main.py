@@ -1,3 +1,4 @@
+# 실행파일 만들려면 PyInstaller 설치하고 터미널창에서 >>PyInstaller --windowed 파일명.py
 import googletrans
 import sys
 import re
@@ -22,14 +23,20 @@ class googleTrans(QMainWindow, form_class):
         self.bttnIni1.clicked.connect(self.clearText1)
         self.bttnIni2.clicked.connect(self.clearText2)
 
+
     def transAction(self):  # 번역 실행 함수 -> slot 함수
+        msgBox = QMessageBox()
+        msgBox.setStyleSheet('color:#000;')
+
         korStr = self.inputKor.text()   # 입력된 한글 텍스트 가져오기
         reg = re.compile(r'[^가-힣|0-9]+$')
         if korStr == "":
             # pass
-            QMessageBox.warning(self, "입력오류", "내용을 입력해주세요")
+            msgBox.warning(msgBox, "입력오류", "내용을 입력해주세요")
         elif reg.search(korStr):  # 한글 판독
-            QMessageBox.warning(self, "입력오류", "한글과 숫자만 입력해주세요")
+            msgBox.warning(msgBox, "입력오류", "한글과 숫자만 입력해주세요")
+
+            # QMessageBox.warning(self, "입력오류", "한글과 숫자만 입력해주세요")
         else:
             trans = googletrans.Translator()  # 구글트랜스 모듈의 객체 선언
             engStr = trans.translate(korStr, "en")
