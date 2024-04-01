@@ -18,24 +18,30 @@ class googleTrans(QMainWindow, form_class):
 
         self.bttnTrans.clicked.connect(self.transAction)
         self.inputKor.returnPressed.connect(self.transAction)
-        self.bttnIni.clicked.connect(self.clearTrans)
+        self.bttnIni1.clicked.connect(self.clearText1)
+        self.bttnIni2.clicked.connect(self.clearText2)
 
     def transAction(self):  # 번역 실행 함수 -> slot 함수
         korStr = self.inputKor.text()   # 입력된 한글 텍스트 가져오기
-        trans = googletrans.Translator()  # 구글트랜스 모듈의 객체 선언
-        engStr = trans.translate(korStr, "en")
-        jpnStr = trans.translate(korStr, "ja")
-        chnStr = trans.translate(korStr, "zh-cn")
-        # self.strEng.setText(engStr.text)
-        # self.strJpn.setText(jpnStr.text)
-        # self.strChn.setText(chnStr.text)
-        self.strEng.append(engStr.text)
-        self.strJpn.append(jpnStr.text)
-        self.strChn.append(chnStr.text)
+        if korStr == "":
+            # pass
+            QMessageBox.warning(self, "입력오류", "내용을 입력해주세요")
+        else:
+            trans = googletrans.Translator()  # 구글트랜스 모듈의 객체 선언
+            engStr = trans.translate(korStr, "en")
+            jpnStr = trans.translate(korStr, "ja")
+            chnStr = trans.translate(korStr, "zh-cn")
+            # self.strEng.setText(engStr.text)
+            # self.strJpn.setText(jpnStr.text)
+            # self.strChn.setText(chnStr.text)
+            self.strEng.append(engStr.text)
+            self.strJpn.append(jpnStr.text)
+            self.strChn.append(chnStr.text)
+
+    def clearText1(self):
         self.inputKor.clear()
 
-    def clearTrans(self):
-        self.inputKor.clear()
+    def clearText2(self):
         self.strEng.clear()
         self.strJpn.clear()
         self.strChn.clear()
